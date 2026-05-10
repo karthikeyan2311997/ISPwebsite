@@ -35,7 +35,7 @@ export default function Hero() {
             Trusted by CPA Firms Globally
           </div>
 
-          <h1 className="font-display text-shadow-sm text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+          <h1 className="font-display text-shadow-sm text-4xl sm:text-5xl lg:text-6xl font-bold text-textclr-primary leading-tight mb-6">
             Your Financial Success,{' '}
             <span className="text-gold-400">Our Infinite Commitment.</span>
           </h1>
