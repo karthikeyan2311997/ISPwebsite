@@ -21,12 +21,17 @@ export default {
           900: '#1e3a8a',
           950: '#172554',
         },
+        textclr: {
+          primary: '#0d6970',
+          secondary: '#3597aa',
+          accent: '#cae9e8',
+        },
         gold: {
           400: '#fbbf24',
           500: '#f59e0b',
           600: '#d97706',
         },
-      },
+      },      
     },
   },
   plugins: [],

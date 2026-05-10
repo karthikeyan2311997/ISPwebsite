@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, TrendingUp } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -28,15 +28,12 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Logo */}
-        <a href="#home" className="flex items-center gap-2 group">
-          <div className={`p-2 rounded-lg transition-colors ${scrolled ? 'bg-brand-700' : 'bg-white/20'}`}>
-            <TrendingUp className={`w-5 h-5 ${scrolled ? 'text-white' : 'text-white'}`} />
-          </div>
+        <a href="#home" className="flex items-center gap-2 group">          
           <div className="leading-tight">
-            <span className={`block font-display font-bold text-lg leading-none ${scrolled ? 'text-brand-900' : 'text-white'}`}>
+            <span className={`block font-display font-bold text-lg leading-none ${scrolled ? 'text-textclr-secondary' : 'text-textclr-primary'}`}>
               Infinity Serv Pro
             </span>
-            <span className={`block text-xs font-medium tracking-wide ${scrolled ? 'text-brand-600' : 'text-blue-200'}`}>
+            <span className={`block text-xs font-medium tracking-wide ${scrolled ? 'text-textclr-primary' : 'text-textclr-primary/50'}`}>
               Financial Excellence
             </span>
           </div>
@@ -48,8 +45,8 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-gold-500 ${
-                scrolled ? 'text-slate-600' : 'text-white/90'
+              className={`text-sm font-medium transition-colors hover:text-textclr-primary ${
+                scrolled ? 'text-textclr-secondary' : 'text-secondary/90'
               }`}
             >
               {link.label}

@@ -49,7 +49,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="text-xs text-blue-300 font-medium mb-0.5">Email</div>
-                    <div className="text-white text-sm">info@infinityservpro.com</div>
+                    <div className="text-white text-sm">info@isp.co.in</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -67,7 +67,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="text-xs text-blue-300 font-medium mb-0.5">Address</div>
-                    <div className="text-white text-sm">Available on request</div>
+                    <div className="text-white text-sm">1/12 A-1 GCT Nagar2, Vadavalli, Coimbatore - 41</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
