@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Linkedin, Send, CheckCircle } from 'lucide-react';
+import { supabase, supabaseKey, supabaseUrl, type ContactFormData } from '../lib/supabase';
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', company: '', service: '', message: '' });
+  const [form, setForm] = useState<ContactFormData>({ name: '', email: '', company: '', service: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const services = [
     'Accounting & Bookkeeping',
@@ -17,9 +20,47 @@ export default function Contact() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    const { error: databaseError } = await supabase
+      .from('contact_form_submissions')
+      .insert([form]);
+
+    if (databaseError) {
+      console.error('Supabase Error:', databaseError.message, databaseError.details);
+      setSubmitError('We could not send your message right now. Please try again.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const emailResponse = await fetch(`${supabaseUrl}/functions/v1/resend-email`, {
+        method: 'POST',
+        headers: {
+          apikey: supabaseKey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'contact',
+          data: form,
+        }),
+      });
+
+      if (!emailResponse.ok) {
+        console.error('Failed to send email notification:', await emailResponse.text());
+      }
+    } catch (emailError) {
+      console.error('Failed to send email notification:', emailError);
+    }
+
     setSubmitted(true);
+    setForm({ name: '', email: '', company: '', service: '', message: '' });
+    setIsSubmitting(false);
+
+    window.setTimeout(() => setSubmitted(false), 5000);
   }
 
   return (
@@ -49,7 +90,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="text-xs text-blue-300 font-medium mb-0.5">Email</div>
-                    <div className="text-white text-sm">info@isp.co.in</div>
+                    <div className="text-white text-sm">info@infinityservpro.com</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -67,7 +108,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="text-xs text-blue-300 font-medium mb-0.5">Address</div>
-                    <div className="text-white text-sm">1/12 A-1 GCT Nagar2, Vadavalli, Coimbatore - 41</div>
+                    <div className="text-white text-sm">1/12 A-1 GCT Nagar 2, Vadavalli, Coimbatore - 41</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -76,7 +117,11 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="text-xs text-blue-300 font-medium mb-0.5">LinkedIn</div>
-                    <div className="text-white text-sm">Infinity Serv Pro</div>
+                    <div className="text-white text-sm">
+                      <a href="https://www.linkedin.com/in/ispvimala/">
+                      Infinity Serv Pro
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -151,10 +196,9 @@ export default function Contact() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Message *</label>
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Message</label>
                     <textarea
-                      name="message"
-                      required
+                      name="message"                      
                       value={form.message}
                       onChange={handleChange}
                       rows={4}
@@ -162,11 +206,17 @@ export default function Contact() {
                       className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-slate-900 placeholder-slate-400 text-sm transition-all resize-none"
                     />
                   </div>
+                  {submitError && (
+                    <p role="alert" className="text-sm text-red-600">
+                      {submitError}
+                    </p>
+                  )}
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 py-3.5 bg-brand-700 hover:bg-brand-800 text-white font-semibold rounded-lg transition-colors shadow-sm text-sm"
+                    disabled={isSubmitting}
+                    className="w-full flex items-center justify-center gap-2 py-3.5 bg-brand-700 hover:bg-brand-800 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors shadow-sm text-sm"
                   >
-                    Send Message <Send className="w-4 h-4" />
+                    {isSubmitting ? 'Sending...' : 'Send Message'} <Send className="w-4 h-4" />
                   </button>
                 </form>
               )}
