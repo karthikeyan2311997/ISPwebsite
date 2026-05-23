@@ -118,7 +118,7 @@ export default function Contact() {
                   <div>
                     <div className="text-xs text-blue-300 font-medium mb-0.5">LinkedIn</div>
                     <div className="text-white text-sm">
-                      <a href="https://www.linkedin.com/in/ispvimala/">
+                      <a href="https://www.linkedin.com/in/infinity-serv-pro/" target="_blank"> 
                       Infinity Serv Pro
                       </a>
                     </div>
