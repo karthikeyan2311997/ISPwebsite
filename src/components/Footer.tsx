@@ -55,10 +55,10 @@ export default function Footer() {
               <a href="mailto:info@infinityservpro.com" className="flex items-center gap-2 text-sm text-slate-400 hover:text-gold-400 transition-colors">
                 <Mail className="w-4 h-4" /> info@infinityservpro.com
               </a>
-              <a href="tel:+10000000000" className="flex items-center gap-2 text-sm text-slate-400 hover:text-gold-400 transition-colors">
-                <Phone className="w-4 h-4" /> +1 (000) 000-0000
+              <a href="tel:+919994686622" className="flex items-center gap-2 text-sm text-slate-400 hover:text-gold-400 transition-colors">
+                <Phone className="w-4 h-4" /> +91 999 468 6622
               </a>
-              <a href="#" className="flex items-center gap-2 text-sm text-slate-400 hover:text-gold-400 transition-colors">
+              <a href="https://www.linkedin.com/in/infinity-serv-pro/" className="flex items-center gap-2 text-sm text-slate-400 hover:text-gold-400 transition-colors">
                 <Linkedin className="w-4 h-4" /> LinkedIn
               </a>
             </div>
@@ -101,8 +101,7 @@ export default function Footer() {
                 { label: 'Services', href: '#services' },
                 { label: 'Our Process', href: '#process' },
                 { label: 'Contact', href: '#contact' },
-                { label: 'Privacy Policy', href: '#' },
-                { label: 'Terms of Service', href: '#' },
+                
               ].map(({ label, href }) => (
                 <li key={label}>
                   <a href={href} className="text-sm text-slate-400 hover:text-gold-400 transition-colors">
